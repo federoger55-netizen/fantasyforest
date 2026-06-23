@@ -11,6 +11,17 @@
 
 <body>
 
+    <!-- COFFRE PIECES -->
+    <div class="top-bar">
+
+        <div class="coin-chest">
+            📦
+            <span id="coins">100</span>
+            🪙
+        </div>
+
+    </div>
+
     <!-- LOGO -->
     <div class="logo-container">
         <img
@@ -22,41 +33,25 @@
     <!-- CONNEXION -->
     <div class="auth-box">
 
-        <h2>🌲 Fantasy Forest</h2>
+        <h2>🌲 Compte Joueur</h2>
 
-        <p class="subtitle">
-            Bienvenue aventurier !
-        </p>
+        <input
+            id="username"
+            type="text"
+            placeholder="Pseudo">
 
-        <div class="auth-form">
+        <input
+            id="password"
+            type="password"
+            placeholder="Mot de passe">
 
-            <input
-                id="username"
-                type="text"
-                placeholder="Pseudo">
+        <button onclick="register()">
+            Inscription
+        </button>
 
-            <input
-                id="password"
-                type="password"
-                placeholder="Mot de passe">
-
-        </div>
-
-        <div class="auth-buttons">
-
-            <button
-                class="register-btn"
-                onclick="register()">
-                Inscription
-            </button>
-
-            <button
-                class="login-btn"
-                onclick="login()">
-                Connexion
-            </button>
-
-        </div>
+        <button onclick="login()">
+            Connexion
+        </button>
 
         <p id="loginStatus"></p>
 
@@ -67,15 +62,12 @@
 
         <div class="cursor"></div>
 
-        <div
-            id="cards"
-            class="cards">
-        </div>
+        <div id="cards" class="cards"></div>
 
     </div>
 
     <!-- BOUTONS -->
-    <div class="buttons-container">
+    <div>
 
         <button
             class="launch-btn"
@@ -105,22 +97,14 @@
     </div>
 
     <!-- INVENTAIRE -->
-    <section class="inventory-section">
+    <h2>🎒 Inventaire</h2>
 
-        <h2>🎒 Inventaire</h2>
-
-        <div id="inventory"></div>
-
-    </section>
+    <div id="inventory"></div>
 
     <!-- LEADERBOARD -->
-    <section class="leaderboard-section">
+    <h2>🏆 Leaderboard des Drops</h2>
 
-        <h2>🏆 Leaderboard des Drops</h2>
-
-        <div id="leaderboard"></div>
-
-    </section>
+    <div id="leaderboard"></div>
 
     <!-- MUSIQUE -->
     <audio id="music" loop>
