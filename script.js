@@ -30,9 +30,9 @@ const cardsList = [
     rarity: "Peu Commune"
 },
 {
-    name: "draco cristal",
+    name: "Draco Cristal",
     image: "draco cristal.png",
-    rarity: "Commune"
+    rarity: "Rare"
 }
 ];
 
@@ -42,10 +42,6 @@ let generatedCards = [];
 
 let drops =
 JSON.parse(localStorage.getItem("drops")) || {};
-
-// ====================
-// INSCRIPTION
-// ====================
 
 async function register(){
 
@@ -72,7 +68,7 @@ async function register(){
 
     if(data.success){
 
-        alert("Compte créé !");
+        alert("Compte créé avec succès !");
 
     }else{
 
@@ -80,10 +76,6 @@ async function register(){
 
     }
 }
-
-// ====================
-// CONNEXION
-// ====================
 
 async function login(){
 
@@ -117,7 +109,7 @@ async function login(){
 
         document.getElementById(
             "loginStatus"
-        ).innerText =
+        ).innerHTML =
         "✅ Connecté : " + username;
 
         loadInventory();
@@ -130,10 +122,6 @@ async function login(){
 
     }
 }
-
-// ====================
-// CREATION CARTES
-// ====================
 
 function createCards(){
 
@@ -163,10 +151,6 @@ function createCards(){
         `;
     }
 }
-
-// ====================
-// ROULETTE
-// ====================
 
 function startRoll(){
 
@@ -206,10 +190,6 @@ function startRoll(){
 
     },16);
 }
-
-// ====================
-// GAGNANT
-// ====================
 
 function showWinner(){
 
@@ -278,15 +258,10 @@ function showWinner(){
         .then(() => {
             loadInventory();
         });
-
     }
 
     updateLeaderboard();
 }
-
-// ====================
-// INVENTAIRE
-// ====================
 
 async function loadInventory(){
 
@@ -295,61 +270,65 @@ async function loadInventory(){
 
     if(!userId) return;
 
-    try{
+    const response =
+    await fetch(
+        `/inventory/${userId}`
+    );
 
-        const response =
-        await fetch(
-            `/inventory/${userId}`
+    const inventory =
+    await response.json();
+
+    let totalCards = 0;
+
+    let html =
+    `<div class="inventory-grid">`;
+
+    inventory.forEach(item => {
+
+        totalCards += item.quantity;
+
+        const cardData =
+        cardsList.find(
+            c => c.name === item.card_name
         );
 
-        const inventory =
-        await response.json();
+        if(!cardData) return;
 
-        let html = "";
+        html += `
+        <div class="inventory-card">
 
-        inventory.forEach(card => {
+            <img
+            src="${cardData.image}"
+            class="inventory-image">
 
-            const cardData =
-            cardsList.find(
-                c => c.name === card.card_name
-            );
+            <h3>
+                ${item.card_name}
+            </h3>
 
-            if(!cardData) return;
+            <p>
+                ${cardData.rarity}
+            </p>
 
-            const rarityClass =
-            cardData.rarity.replace(" ","");
-
-            html += `
-            <div class="inventory-card ${rarityClass}">
-                <img src="${cardData.image}">
-                <h3>${cardData.name}</h3>
-                <p>${cardData.rarity}</p>
-                <p>Quantité : ${card.quantity}</p>
+            <div class="inventory-qty">
+                x${item.quantity}
             </div>
-            `;
-        });
 
-        document.getElementById(
-            "inventory"
-        ).innerHTML = html;
+        </div>
+        `;
+    });
 
-        document.getElementById(
-            "cardCount"
-        ).innerText =
-        "Collection : " +
-        inventory.length +
-        " cartes";
+    html += `</div>`;
 
-    }catch(err){
+    html += `
+    <h3 style="margin-top:20px;color:gold;">
+        Collection : ${totalCards} cartes
+    </h3>
+    `;
 
-        console.error(err);
-
-    }
+    document.getElementById(
+        "inventory"
+    ).innerHTML = html;
 }
-
-// ====================
-// LEADERBOARD
-// ====================
 
 function updateLeaderboard(){
 
@@ -359,8 +338,8 @@ function updateLeaderboard(){
 
         html += `
         <p>
-        ${card} :
-        ${drops[card]}
+            ${card} :
+            ${drops[card]}
         </p>
         `;
     }
@@ -369,10 +348,6 @@ function updateLeaderboard(){
         "leaderboard"
     ).innerHTML = html;
 }
-
-// ====================
-// MUSIQUE
-// ====================
 
 const music =
 document.getElementById("music");
@@ -409,10 +384,6 @@ function toggleMusic(){
 
     }
 }
-
-// ====================
-// DEMARRAGE
-// ====================
 
 createCards();
 updateLeaderboard();
