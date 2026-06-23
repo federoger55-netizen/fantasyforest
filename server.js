@@ -188,6 +188,34 @@ app.post("/spend-coins", async (req,res) => {
 });
 
 // ====================
+// AJOUTER DES PIÈCES
+// ====================
+app.post("/add-coins", async (req,res) => {
+
+    try {
+
+        const { userId, amount } = req.body;
+
+        await pool.query(
+            'UPDATE "user" SET coins = coins + $1 WHERE id=$2',
+            [amount, userId]
+        );
+
+        res.json({
+            success:true
+        });
+
+    } catch(err){
+
+        console.error(err);
+
+        res.json({
+            success:false
+        });
+    }
+});
+
+// ====================
 // AJOUTER UNE CARTE
 // ====================
 app.post("/add-card", async (req, res) => {
