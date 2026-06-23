@@ -1,155 +1,300 @@
-/* NOUVELLE CONNEXION */
-
-.auth-box{
-    width:650px;
-    max-width:90%;
-
-    margin:20px auto 40px auto;
-
-    padding:30px;
-
-    border-radius:25px;
-
-    background:rgba(0,0,0,0.45);
-
-    backdrop-filter:blur(12px);
-
-    border:2px solid rgba(0,255,120,0.3);
-
-    box-shadow:
-    0 0 25px rgba(0,255,120,.3),
-    0 0 50px rgba(0,255,120,.15);
-}
-
-.auth-box h2{
-    margin-top:0;
-    margin-bottom:25px;
-
-    font-size:38px;
-
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    text-align:center;
     color:white;
 
-    text-shadow:
-    0 0 15px rgba(0,255,120,.8);
+    background-image:url("BANNIERE FORET.png");
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    min-height:100vh;
 }
 
-.auth-row{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:15px;
-    flex-wrap:wrap;
+/* LOGO */
+.logo-container{
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:15px;
+}
+
+.logo-title{
+    width:750px;
+    max-width:95%;
+    height:auto;
+
+    filter:
+    drop-shadow(0 0 15px rgba(0,255,120,.5))
+    drop-shadow(0 0 30px rgba(255,215,0,.3));
+}
+
+/* CONNEXION */
+.auth-box{
+    margin-bottom:20px;
 }
 
 .auth-box input{
-
-    width:230px;
-    height:50px;
-
+    padding:8px;
+    border-radius:8px;
     border:none;
-    outline:none;
-
-    border-radius:12px;
-
-    padding-left:15px;
-
-    font-size:17px;
-
-    background:rgba(255,255,255,0.9);
-
-    transition:.3s;
 }
 
-.auth-box input:focus{
+.auth-box button{
+    padding:8px 12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
 
-    transform:scale(1.03);
+/* ROULETTE */
+.roulette{
+    width:950px;
+    height:280px;
+    margin:40px auto;
+
+    overflow:hidden;
+    position:relative;
+
+    border-radius:20px;
+
+    background:rgba(0,0,0,0.35);
+
+    backdrop-filter:blur(3px);
 
     box-shadow:
-    0 0 15px rgba(0,255,120,.8);
+    0 0 20px rgba(0,255,100,.5);
 }
 
-.auth-btn{
+.cards{
+    display:flex;
+    position:absolute;
+    left:0;
+    top:15px;
+}
 
-    height:50px;
+.card{
+    width:180px;
+    height:250px;
+    margin-right:15px;
 
-    padding:0 20px;
+    border-radius:15px;
+    overflow:hidden;
+
+    flex-shrink:0;
+}
+
+.card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* CURSEUR */
+.cursor{
+    position:absolute;
+    left:50%;
+    top:0;
+
+    width:4px;
+    height:100%;
+
+    transform:translateX(-50%);
+
+    background:white;
+
+    box-shadow:
+    0 0 10px white,
+    0 0 25px white,
+    0 0 40px white;
+
+    z-index:10;
+}
+
+/* BOUTONS */
+.launch-btn{
+    width:220px;
+    height:60px;
 
     border:none;
-
     border-radius:12px;
 
-    font-size:16px;
+    background:#19c94f;
+
+    color:white;
+    font-size:24px;
     font-weight:bold;
 
     cursor:pointer;
 
-    transition:.25s;
-}
-
-.register-btn{
-
-    background:#22c55e;
-    color:white;
+    margin-top:10px;
 
     box-shadow:
-    0 0 15px #22c55e;
+    0 0 15px #19c94f,
+    0 0 30px rgba(25,201,79,.5);
+
+    transition:0.2s;
 }
 
-.login-btn{
+.launch-btn:hover{
+    transform:scale(1.05);
+}
+
+.music-btn{
+    width:180px;
+    height:60px;
+
+    margin-left:10px;
+
+    border:none;
+    border-radius:12px;
 
     background:#3b82f6;
+
     color:white;
-
-    box-shadow:
-    0 0 15px #3b82f6;
-}
-
-.auth-btn:hover{
-
-    transform:translateY(-3px) scale(1.05);
-}
-
-#loginStatus{
-
-    margin-top:15px;
-
-    font-size:18px;
+    font-size:20px;
     font-weight:bold;
 
-    color:#7CFF9E;
+    cursor:pointer;
+
+    box-shadow:
+    0 0 15px #3b82f6,
+    0 0 30px rgba(59,130,246,.5);
+
+    transition:0.2s;
 }
 
-/* ========================= */
-/* VERSION TELEPHONE */
-/* ========================= */
+.music-btn:hover{
+    transform:scale(1.05);
+}
 
-@media screen and (max-width:768px){
+/* RESULTAT */
+#result{
+    margin-top:25px;
+    font-size:28px;
+    font-weight:bold;
 
-    .auth-box{
-        width:95%;
-        padding:20px 15px;
-    }
+    text-shadow:
+    0 0 10px black,
+    0 0 20px black;
+}
 
-    .auth-box h2{
-        font-size:28px;
-        margin-bottom:20px;
-    }
+/* CARTE GAGNÉE */
+#winnerContainer{
+    margin-top:15px;
+}
 
-    .auth-row{
-        flex-direction:column;
-        gap:10px;
-    }
+#winnerCard{
+    width:250px;
+    display:none;
 
-    .auth-box input{
-        width:100%;
-        box-sizing:border-box;
-    }
+    border-radius:15px;
 
-    .auth-btn{
-        width:100%;
-    }
+    box-shadow:
+    0 0 20px #00ff55,
+    0 0 40px #00ff55;
+}
 
-    #loginStatus{
-        font-size:16px;
-    }
+/* INVENTAIRE */
+
+#cardCount{
+    color:#ffd700;
+    text-shadow:0 0 10px black;
+}
+
+.inventory-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:20px;
+
+    max-width:1200px;
+    margin:20px auto;
+    padding:20px;
+}
+
+.inventory-card{
+    background:rgba(0,0,0,0.55);
+
+    border-radius:18px;
+
+    padding:10px;
+
+    backdrop-filter:blur(5px);
+
+    transition:0.3s;
+
+    box-shadow:
+    0 0 10px rgba(255,255,255,.1);
+}
+
+.inventory-card:hover{
+    transform:translateY(-8px) scale(1.03);
+
+    box-shadow:
+    0 0 20px gold,
+    0 0 40px rgba(255,215,0,.5);
+}
+
+.inventory-card img{
+    width:100%;
+    border-radius:12px;
+}
+
+.inventory-card h3{
+    margin-top:10px;
+    color:white;
+}
+
+.inventory-card p{
+    color:#ddd;
+    font-size:18px;
+}
+
+/* RARETÉS */
+
+.Commune{
+    border:2px solid #9e9e9e;
+}
+
+.PeuCommune{
+    border:2px solid #32cd32;
+}
+
+.Rare{
+    border:2px solid #1e90ff;
+}
+
+.Epique{
+    border:2px solid #a020f0;
+}
+
+.Legendaire{
+    border:2px solid gold;
+
+    box-shadow:
+    0 0 15px gold,
+    0 0 30px rgba(255,215,0,.5);
+}
+
+/* LEADERBOARD */
+#leaderboard{
+    width:500px;
+    margin:20px auto;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:rgba(0,0,0,0.4);
+
+    backdrop-filter:blur(3px);
+
+    box-shadow:
+    0 0 20px rgba(0,255,100,.4);
+}
+
+#leaderboard p{
+    font-size:22px;
+    margin:10px 0;
 }
