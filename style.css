@@ -1,0 +1,202 @@
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    text-align:center;
+    color:white;
+
+    background-image:url("image/BANNIERE FORET.png");
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    min-height:100vh;
+}
+
+/* LOGO FANTASY FOREST */
+.logo-container{
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:15px;
+}
+
+.logo-title{
+    width:750px;
+    max-width:95%;
+    height:auto;
+
+    filter:
+    drop-shadow(0 0 15px rgba(0,255,120,.5))
+    drop-shadow(0 0 30px rgba(255,215,0,.3));
+}
+
+/* ROULETTE */
+.roulette{
+    width:950px;
+    height:280px;
+    margin:40px auto;
+
+    overflow:hidden;
+    position:relative;
+
+    border-radius:20px;
+
+    background:rgba(0,0,0,0.35);
+
+    backdrop-filter:blur(3px);
+
+    box-shadow:
+    0 0 20px rgba(0,255,100,.5);
+}
+
+.cards{
+    display:flex;
+    position:absolute;
+    left:0;
+    top:15px;
+}
+
+.card{
+    width:180px;
+    height:250px;
+    margin-right:15px;
+
+    border-radius:15px;
+    overflow:hidden;
+
+    flex-shrink:0;
+}
+
+.card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* CURSEUR */
+.cursor{
+    position:absolute;
+    left:50%;
+    top:0;
+
+    width:4px;
+    height:100%;
+
+    transform:translateX(-50%);
+
+    background:white;
+
+    box-shadow:
+    0 0 10px white,
+    0 0 25px white,
+    0 0 40px white;
+
+    z-index:10;
+}
+
+/* BOUTON LANCER */
+.launch-btn{
+    width:220px;
+    height:60px;
+
+    border:none;
+    border-radius:12px;
+
+    background:#19c94f;
+
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-top:10px;
+
+    box-shadow:
+    0 0 15px #19c94f,
+    0 0 30px rgba(25,201,79,.5);
+
+    transition:0.2s;
+}
+
+.launch-btn:hover{
+    transform:scale(1.05);
+}
+
+/* BOUTON MUSIQUE */
+.music-btn{
+    width:180px;
+    height:60px;
+
+    margin-left:10px;
+
+    border:none;
+    border-radius:12px;
+
+    background:#3b82f6;
+
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 0 15px #3b82f6,
+    0 0 30px rgba(59,130,246,.5);
+
+    transition:0.2s;
+}
+
+.music-btn:hover{
+    transform:scale(1.05);
+}
+
+/* RESULTAT */
+#result{
+    margin-top:25px;
+    font-size:28px;
+    font-weight:bold;
+
+    text-shadow:
+    0 0 10px black,
+    0 0 20px black;
+}
+
+/* IMAGE GAGNÉE */
+#winnerContainer{
+    margin-top:15px;
+}
+
+#winnerCard{
+    width:250px;
+    display:none;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 0 20px #00ff55,
+    0 0 40px #00ff55;
+}
+
+/* LEADERBOARD */
+#leaderboard{
+    width:500px;
+    margin:20px auto;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:rgba(0,0,0,0.4);
+
+    backdrop-filter:blur(3px);
+
+    box-shadow:
+    0 0 20px rgba(0,255,100,.4);
+}
+
+#leaderboard p{
+    font-size:22px;
+    margin:10px 0;
+}

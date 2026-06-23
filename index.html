@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Forest</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- LOGO -->
+    <div class="logo-container">
+        <img src="image/fantasy-forest.png"
+             alt="Fantasy Forest"
+             class="logo-title">
+    </div>
+
+    <!-- ROULETTE -->
+    <div class="roulette">
+
+        <div class="cursor"></div>
+
+        <div id="cards" class="cards"></div>
+
+    </div>
+
+    <!-- BOUTONS -->
+    <div>
+
+        <button class="launch-btn" onclick="startRoll()">
+            LANCER
+        </button>
+
+        <button class="music-btn" onclick="toggleMusic()">
+            🔊 MUSIQUE
+        </button>
+
+    </div>
+
+    <!-- RESULTAT -->
+    <h2 id="result"></h2>
+
+    <!-- CARTE GAGNÉE -->
+    <div id="winnerContainer">
+        <img id="winnerCard" src="" alt="Carte gagnée">
+    </div>
+
+    <!-- LEADERBOARD -->
+    <h2>🏆 Leaderboard des Drops</h2>
+
+    <div id="leaderboard"></div>
+
+    <!-- AUDIO -->
+    <audio id="music" loop>
+        <source src="audio/foret.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
