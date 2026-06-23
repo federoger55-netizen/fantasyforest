@@ -40,11 +40,12 @@ let position = 0;
 let speed = 0;
 let generatedCards = [];
 
-let coins =
-parseInt(localStorage.getItem("coins")) || 100;
+let coins = 0;
 
 let drops =
-JSON.parse(localStorage.getItem("drops")) || {};
+JSON.parse(
+    localStorage.getItem("drops")
+) || {};
 
 function updateCoins(){
 
@@ -53,22 +54,22 @@ function updateCoins(){
 
     if(coinElement){
 
-        coinElement.innerText = coins;
+        coinElement.innerText =
+        coins;
     }
-
-    localStorage.setItem(
-        "coins",
-        coins
-    );
 }
 
 async function register(){
 
     const username =
-    document.getElementById("username").value;
+    document.getElementById(
+        "username"
+    ).value;
 
     const password =
-    document.getElementById("password").value;
+    document.getElementById(
+        "password"
+    ).value;
 
     const response =
     await fetch("/register",{
@@ -87,32 +88,29 @@ async function register(){
 
     if(data.success){
 
-        coins = 100;
-
-        localStorage.setItem(
-            "coins",
-            100
-        );
-
-        updateCoins();
-
         alert(
-            "Compte créé avec succès ! 🎁 +100 pièces"
+            "🎉 Compte créé ! Tu commences avec 100 pièces."
         );
 
     }else{
 
-        alert("Erreur inscription");
+        alert(
+            "Erreur inscription"
+        );
     }
 }
 
 async function login(){
 
     const username =
-    document.getElementById("username").value;
+    document.getElementById(
+        "username"
+    ).value;
 
     const password =
-    document.getElementById("password").value;
+    document.getElementById(
+        "password"
+    ).value;
 
     const response =
     await fetch("/login",{
@@ -136,10 +134,16 @@ async function login(){
             data.userId
         );
 
+        coins =
+        data.coins;
+
+        updateCoins();
+
         document.getElementById(
             "loginStatus"
         ).innerHTML =
-        "✅ Connecté : " + username;
+        "✅ Connecté : " +
+        username;
 
         loadInventory();
 
@@ -154,13 +158,19 @@ async function login(){
 function createCards(){
 
     const container =
-    document.getElementById("cards");
+    document.getElementById(
+        "cards"
+    );
 
     container.innerHTML = "";
 
     generatedCards = [];
 
-    for(let i=0;i<50;i++){
+    for(
+        let i = 0;
+        i < 50;
+        i++
+    ){
 
         const card =
         cardsList[
@@ -170,7 +180,9 @@ function createCards(){
             )
         ];
 
-        generatedCards.push(card);
+        generatedCards.push(
+            card
+        );
 
         container.innerHTML += `
         <div class="card">
@@ -180,18 +192,53 @@ function createCards(){
     }
 }
 
-function startRoll(){
+async function startRoll(){
 
-    if(coins < 20){
+    const userId =
+    localStorage.getItem(
+        "userId"
+    );
+
+    if(!userId){
 
         alert(
-            "❌ Il faut 20 pièces pour lancer la roulette."
+            "Connecte-toi d'abord !"
         );
 
         return;
     }
 
-    coins -= 20;
+    const response =
+    await fetch(
+        "/spend-coins",
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+            body:JSON.stringify({
+                userId,
+                amount:20
+            })
+        }
+    );
+
+    const data =
+    await response.json();
+
+    if(!data.success){
+
+        alert(
+            "❌ Pas assez de pièces !"
+        );
+
+        return;
+    }
+
+    coins =
+    data.coins;
+
     updateCoins();
 
     createCards();
@@ -200,7 +247,9 @@ function startRoll(){
     speed = 35;
 
     const cards =
-    document.getElementById("cards");
+    document.getElementById(
+        "cards"
+    );
 
     document.getElementById(
         "result"
@@ -223,7 +272,9 @@ function startRoll(){
 
         if(speed < 0.3){
 
-            clearInterval(roll);
+            clearInterval(
+                roll
+            );
 
             showWinner();
         }
@@ -233,7 +284,8 @@ function startRoll(){
 
 function showWinner(){
 
-    const cardWidth = 195;
+    const cardWidth =
+    195;
 
     const centerLine =
     document.querySelector(
@@ -242,12 +294,17 @@ function showWinner(){
 
     const winnerIndex =
     Math.floor(
-        (position + centerLine)
-        / cardWidth
+        (
+            position +
+            centerLine
+        ) /
+        cardWidth
     );
 
     const winner =
-    generatedCards[winnerIndex];
+    generatedCards[
+        winnerIndex
+    ];
 
     if(!winner) return;
 
@@ -264,27 +321,80 @@ function showWinner(){
         "winnerCard"
     );
 
-    card.src = winner.image;
-    card.style.display = "block";
+    card.src =
+    winner.image;
 
-    if(!drops[winner.name]){
+    card.style.display =
+    "block";
 
-        drops[winner.name] = 0;
+    if(
+        !drops[winner.name]
+    ){
+
+        drops[
+            winner.name
+        ] = 0;
     }
 
-    drops[winner.name]++;
+    drops[
+        winner.name
+    ]++;
 
     localStorage.setItem(
         "drops",
-        JSON.stringify(drops)
+        JSON.stringify(
+            drops
+        )
     );
 
     const userId =
-    localStorage.getItem("userId");
+    localStorage.getItem(
+        "userId"
+    );
 
     if(userId){
 
-        fetch("/add-card",{
+        fetch(
+            "/add-card",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+                body:JSON.stringify({
+                    userId,
+                    card:winner.name
+                })
+            }
+        )
+        .then(() => {
+
+            loadInventory();
+        });
+    }
+
+    let reward = 5;
+
+    if(
+        winner.rarity ===
+        "Peu Commune"
+    ){
+
+        reward = 10;
+    }
+
+    if(
+        winner.rarity ===
+        "Rare"
+    ){
+
+        reward = 20;
+    }
+
+    fetch(
+        "/add-coins",
+        {
             method:"POST",
             headers:{
                 "Content-Type":
@@ -292,13 +402,24 @@ function showWinner(){
             },
             body:JSON.stringify({
                 userId,
-                card:winner.name
+                amount:reward
             })
-        })
-        .then(() => {
-            loadInventory();
-        });
-    }
+        }
+    )
+    .then(
+        response =>
+        response.json()
+    )
+    .then(data => {
+
+        if(data.success){
+
+            coins =
+            data.coins;
+
+            updateCoins();
+        }
+    });
 
     updateLeaderboard();
 }
@@ -306,7 +427,9 @@ function showWinner(){
 async function loadInventory(){
 
     const userId =
-    localStorage.getItem("userId");
+    localStorage.getItem(
+        "userId"
+    );
 
     if(!userId) return;
 
@@ -318,21 +441,28 @@ async function loadInventory(){
     const inventory =
     await response.json();
 
-    let totalCards = 0;
+    let totalCards =
+    0;
 
     let html =
     `<div class="inventory-grid">`;
 
-    inventory.forEach(item => {
+    inventory.forEach(
+        item => {
 
-        totalCards += item.quantity;
+        totalCards +=
+        item.quantity;
 
         const cardData =
         cardsList.find(
-            c => c.name === item.card_name
+            c =>
+            c.name ===
+            item.card_name
         );
 
-        if(!cardData) return;
+        if(
+            !cardData
+        ) return;
 
         html += `
         <div class="inventory-card">
@@ -357,28 +487,38 @@ async function loadInventory(){
         `;
     });
 
-    html += `</div>`;
+    html +=
+    `</div>`;
 
     html += `
-    <h3 style="margin-top:20px;color:gold;">
-        Collection : ${totalCards} cartes
+    <h3 style="
+    margin-top:20px;
+    color:gold;">
+        Collection :
+        ${totalCards}
+        cartes
     </h3>
     `;
 
     document.getElementById(
         "inventory"
-    ).innerHTML = html;
+    ).innerHTML =
+    html;
 }
 
 function updateLeaderboard(){
 
     let html = "";
 
-    for(const card in drops){
+    for(
+        const card
+        in drops
+    ){
 
         html += `
         <p>
-            ${card} :
+            ${card}
+            :
             ${drops[card]}
         </p>
         `;
@@ -386,11 +526,14 @@ function updateLeaderboard(){
 
     document.getElementById(
         "leaderboard"
-    ).innerHTML = html;
+    ).innerHTML =
+    html;
 }
 
 const music =
-document.getElementById("music");
+document.getElementById(
+    "music"
+);
 
 document.addEventListener(
     "click",
@@ -401,9 +544,10 @@ document.addEventListener(
             music.paused
         ){
 
-            music.volume = 0.3;
-            music.play();
+            music.volume =
+            0.3;
 
+            music.play();
         }
 
     },
@@ -414,7 +558,9 @@ function toggleMusic(){
 
     if(!music) return;
 
-    if(music.paused){
+    if(
+        music.paused
+    ){
 
         music.play();
 
