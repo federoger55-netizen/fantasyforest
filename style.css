@@ -371,23 +371,135 @@ h2{
 
 /* MOBILE */
 
-@media(max-width:1000px){
+/* ========================= */
+/* COFFRE DE PIÈCES */
+/* ========================= */
+
+.top-bar{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:999;
+}
+
+.coin-chest{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:12px 20px;
+
+    border-radius:20px;
+
+    background:rgba(0,0,0,0.75);
+
+    border:2px solid gold;
+
+    color:white;
+
+    font-size:28px;
+    font-weight:bold;
+
+    box-shadow:
+    0 0 15px gold,
+    0 0 30px rgba(255,215,0,.5);
+}
+
+/* ========================= */
+/* RESPONSIVE TÉLÉPHONE */
+/* ========================= */
+
+@media(max-width:768px){
+
+    .logo-title{
+        width:95%;
+    }
+
+    .auth-box{
+        width:95%;
+        padding:15px;
+    }
+
+    .auth-box input{
+        width:90%;
+        height:45px;
+        margin:8px auto;
+        display:block;
+    }
+
+    .auth-box button{
+        width:90%;
+        height:45px;
+        margin:8px auto;
+        display:block;
+    }
 
     .roulette{
-
         width:95%;
+        height:220px;
+    }
+
+    .card{
+        width:140px;
+        height:190px;
+    }
+
+    .cards{
+        top:10px;
     }
 
     .launch-btn,
     .music-btn{
-
         width:90%;
+        height:55px;
+        margin:10px auto;
+        display:block;
 
-        margin:10px 0;
+        font-size:22px;
+    }
+
+    #result{
+        font-size:22px;
+        padding:0 10px;
+    }
+
+    #winnerCard{
+        width:180px;
+    }
+
+    .inventory-grid{
+        gap:12px;
     }
 
     .inventory-card{
+        width:160px;
+        padding:10px;
+    }
 
-        width:180px;
+    .inventory-card h3{
+        font-size:16px;
+    }
+
+    .inventory-card p{
+        font-size:14px;
+    }
+
+    #leaderboard{
+        width:90%;
+        padding:15px;
+    }
+
+    #leaderboard p{
+        font-size:18px;
+    }
+
+    .top-bar{
+        top:10px;
+        right:10px;
+    }
+
+    .coin-chest{
+        font-size:20px;
+        padding:10px 15px;
     }
 }
