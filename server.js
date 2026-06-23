@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 
@@ -268,7 +268,5 @@ app.get("/ping", (req,res) => {
 // ====================
 app.listen(process.env.PORT || 3000, () => {
 
-    console.log(
-        "Fantasy Forest lancé !"
-    );
+    console.log("Fantasy Forest lancé !");
 });
