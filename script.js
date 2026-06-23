@@ -145,6 +145,48 @@ function showWinner(){
         JSON.stringify(drops)
     );
 
+    const userId =
+    localStorage.getItem("userId");
+
+    if(userId){
+
+        fetch("/add-card", {
+            method: "POST",
+            headers: {
+                "Content-Type":
+                "application/json"
+            },
+            body: JSON.stringify({
+                userId: userId,
+                card: winner.name
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            console.log(
+                "Carte sauvegardée :",
+                data
+            );
+
+        })
+        .catch(err => {
+
+            console.error(
+                "Erreur sauvegarde carte :",
+                err
+            );
+
+        });
+
+    } else {
+
+        console.log(
+            "Aucun utilisateur connecté"
+        );
+
+    }
+
     updateLeaderboard();
 }
 
@@ -162,6 +204,35 @@ function updateLeaderboard(){
     document.getElementById(
         "leaderboard"
     ).innerHTML = html;
+}
+
+async function loadInventory(){
+
+    const userId =
+    localStorage.getItem("userId");
+
+    if(!userId) return;
+
+    try{
+
+        const response =
+        await fetch(
+            `/inventory/${userId}`
+        );
+
+        const inventory =
+        await response.json();
+
+        console.log(
+            "Inventaire :",
+            inventory
+        );
+
+    }catch(err){
+
+        console.error(err);
+
+    }
 }
 
 const music =
@@ -195,3 +266,4 @@ function toggleMusic(){
 
 createCards();
 updateLeaderboard();
+loadInventory();
