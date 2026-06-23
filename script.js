@@ -43,6 +43,10 @@ let generatedCards = [];
 let drops =
 JSON.parse(localStorage.getItem("drops")) || {};
 
+// ====================
+// INSCRIPTION
+// ====================
+
 async function register(){
 
     const username =
@@ -76,6 +80,10 @@ async function register(){
 
     }
 }
+
+// ====================
+// CONNEXION
+// ====================
 
 async function login(){
 
@@ -123,6 +131,10 @@ async function login(){
     }
 }
 
+// ====================
+// CREATION CARTES
+// ====================
+
 function createCards(){
 
     const container =
@@ -151,6 +163,10 @@ function createCards(){
         `;
     }
 }
+
+// ====================
+// ROULETTE
+// ====================
 
 function startRoll(){
 
@@ -190,6 +206,10 @@ function startRoll(){
 
     },16);
 }
+
+// ====================
+// GAGNANT
+// ====================
 
 function showWinner(){
 
@@ -264,6 +284,10 @@ function showWinner(){
     updateLeaderboard();
 }
 
+// ====================
+// INVENTAIRE
+// ====================
+
 async function loadInventory(){
 
     const userId =
@@ -271,30 +295,61 @@ async function loadInventory(){
 
     if(!userId) return;
 
-    const response =
-    await fetch(
-        `/inventory/${userId}`
-    );
+    try{
 
-    const inventory =
-    await response.json();
+        const response =
+        await fetch(
+            `/inventory/${userId}`
+        );
 
-    let html = "";
+        const inventory =
+        await response.json();
 
-    inventory.forEach(card => {
+        let html = "";
 
-        html += `
-        <p>
-        ${card.card_name}
-        x${card.quantity}
-        </p>
-        `;
-    });
+        inventory.forEach(card => {
 
-    document.getElementById(
-        "inventory"
-    ).innerHTML = html;
+            const cardData =
+            cardsList.find(
+                c => c.name === card.card_name
+            );
+
+            if(!cardData) return;
+
+            const rarityClass =
+            cardData.rarity.replace(" ","");
+
+            html += `
+            <div class="inventory-card ${rarityClass}">
+                <img src="${cardData.image}">
+                <h3>${cardData.name}</h3>
+                <p>${cardData.rarity}</p>
+                <p>Quantité : ${card.quantity}</p>
+            </div>
+            `;
+        });
+
+        document.getElementById(
+            "inventory"
+        ).innerHTML = html;
+
+        document.getElementById(
+            "cardCount"
+        ).innerText =
+        "Collection : " +
+        inventory.length +
+        " cartes";
+
+    }catch(err){
+
+        console.error(err);
+
+    }
 }
+
+// ====================
+// LEADERBOARD
+// ====================
 
 function updateLeaderboard(){
 
@@ -314,6 +369,10 @@ function updateLeaderboard(){
         "leaderboard"
     ).innerHTML = html;
 }
+
+// ====================
+// MUSIQUE
+// ====================
 
 const music =
 document.getElementById("music");
@@ -350,6 +409,10 @@ function toggleMusic(){
 
     }
 }
+
+// ====================
+// DEMARRAGE
+// ====================
 
 createCards();
 updateLeaderboard();
