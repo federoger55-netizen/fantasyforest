@@ -118,3 +118,38 @@
 
     color:#7CFF9E;
 }
+
+/* ========================= */
+/* VERSION TELEPHONE */
+/* ========================= */
+
+@media screen and (max-width:768px){
+
+    .auth-box{
+        width:95%;
+        padding:20px 15px;
+    }
+
+    .auth-box h2{
+        font-size:28px;
+        margin-bottom:20px;
+    }
+
+    .auth-row{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .auth-box input{
+        width:100%;
+        box-sizing:border-box;
+    }
+
+    .auth-btn{
+        width:100%;
+    }
+
+    #loginStatus{
+        font-size:16px;
+    }
+}
