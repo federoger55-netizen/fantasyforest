@@ -40,8 +40,27 @@ let position = 0;
 let speed = 0;
 let generatedCards = [];
 
+let coins =
+parseInt(localStorage.getItem("coins")) || 100;
+
 let drops =
 JSON.parse(localStorage.getItem("drops")) || {};
+
+function updateCoins(){
+
+    const coinElement =
+    document.getElementById("coins");
+
+    if(coinElement){
+
+        coinElement.innerText = coins;
+    }
+
+    localStorage.setItem(
+        "coins",
+        coins
+    );
+}
 
 async function register(){
 
@@ -154,6 +173,18 @@ function createCards(){
 
 function startRoll(){
 
+    if(coins < 10){
+
+        alert(
+            "❌ Pas assez de pièces !"
+        );
+
+        return;
+    }
+
+    coins -= 10;
+    updateCoins();
+
     createCards();
 
     position = 0;
@@ -238,6 +269,23 @@ function showWinner(){
         "drops",
         JSON.stringify(drops)
     );
+
+    let reward = 5;
+
+    if(winner.rarity === "Rare"){
+
+        reward = 20;
+
+    }else if(
+        winner.rarity ===
+        "Peu Commune"
+    ){
+
+        reward = 10;
+    }
+
+    coins += reward;
+    updateCoins();
 
     const userId =
     localStorage.getItem("userId");
@@ -388,3 +436,4 @@ function toggleMusic(){
 createCards();
 updateLeaderboard();
 loadInventory();
+updateCoins();
