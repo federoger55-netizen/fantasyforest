@@ -11,72 +11,118 @@
 
 <body>
 
+    <!-- LOGO -->
     <div class="logo-container">
-        <img src="fantasy-forest.png"
-             alt="Fantasy Forest"
-             class="logo-title">
+        <img
+            src="fantasy-forest.png"
+            alt="Fantasy Forest"
+            class="logo-title">
     </div>
 
+    <!-- CONNEXION -->
     <div class="auth-box">
 
-        <h2>🌲 Compte Joueur</h2>
+        <h2>🌲 Fantasy Forest</h2>
 
-        <input
-            id="username"
-            type="text"
-            placeholder="Pseudo">
+        <p class="subtitle">
+            Bienvenue aventurier !
+        </p>
 
-        <input
-            id="password"
-            type="password"
-            placeholder="Mot de passe">
+        <div class="auth-form">
 
-        <button onclick="register()">
-            Inscription
-        </button>
+            <input
+                id="username"
+                type="text"
+                placeholder="Pseudo">
 
-        <button onclick="login()">
-            Connexion
-        </button>
+            <input
+                id="password"
+                type="password"
+                placeholder="Mot de passe">
+
+        </div>
+
+        <div class="auth-buttons">
+
+            <button
+                class="register-btn"
+                onclick="register()">
+                Inscription
+            </button>
+
+            <button
+                class="login-btn"
+                onclick="login()">
+                Connexion
+            </button>
+
+        </div>
 
         <p id="loginStatus"></p>
 
     </div>
 
+    <!-- ROULETTE -->
     <div class="roulette">
 
         <div class="cursor"></div>
 
-        <div id="cards" class="cards"></div>
+        <div
+            id="cards"
+            class="cards">
+        </div>
 
     </div>
 
-    <div>
+    <!-- BOUTONS -->
+    <div class="buttons-container">
 
-        <button class="launch-btn" onclick="startRoll()">
-            LANCER
+        <button
+            class="launch-btn"
+            onclick="startRoll()">
+            🎲 LANCER
         </button>
 
-        <button class="music-btn" onclick="toggleMusic()">
+        <button
+            class="music-btn"
+            onclick="toggleMusic()">
             🔊 MUSIQUE
         </button>
 
     </div>
 
+    <!-- RESULTAT -->
     <h2 id="result"></h2>
 
+    <!-- CARTE GAGNÉE -->
     <div id="winnerContainer">
-        <img id="winnerCard" src="" alt="Carte gagnée">
+
+        <img
+            id="winnerCard"
+            src=""
+            alt="Carte gagnée">
+
     </div>
 
-    <h2>🎒 Inventaire</h2>
+    <!-- INVENTAIRE -->
+    <section class="inventory-section">
 
-    <div id="inventory"></div>
+        <h2>🎒 Inventaire</h2>
 
-    <h2>🏆 Leaderboard des Drops</h2>
+        <div id="inventory"></div>
 
-    <div id="leaderboard"></div>
+    </section>
 
+    <!-- LEADERBOARD -->
+    <section class="leaderboard-section">
+
+        <h2>🏆 Leaderboard des Drops</h2>
+
+        <div id="leaderboard"></div>
+
+    </section>
+
+    <!-- MUSIQUE -->
     <audio id="music" loop>
         <source src="foret.mp3" type="audio/mpeg">
     </audio>
