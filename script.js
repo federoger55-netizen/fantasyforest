@@ -87,12 +87,22 @@ async function register(){
 
     if(data.success){
 
-        alert("Compte créé avec succès !");
+        coins = 100;
+
+        localStorage.setItem(
+            "coins",
+            100
+        );
+
+        updateCoins();
+
+        alert(
+            "Compte créé avec succès ! 🎁 +100 pièces"
+        );
 
     }else{
 
         alert("Erreur inscription");
-
     }
 }
 
@@ -138,7 +148,6 @@ async function login(){
         alert(
             "Identifiants incorrects"
         );
-
     }
 }
 
@@ -173,16 +182,16 @@ function createCards(){
 
 function startRoll(){
 
-    if(coins < 10){
+    if(coins < 20){
 
         alert(
-            "❌ Pas assez de pièces !"
+            "❌ Il faut 20 pièces pour lancer la roulette."
         );
 
         return;
     }
 
-    coins -= 10;
+    coins -= 20;
     updateCoins();
 
     createCards();
@@ -269,23 +278,6 @@ function showWinner(){
         "drops",
         JSON.stringify(drops)
     );
-
-    let reward = 5;
-
-    if(winner.rarity === "Rare"){
-
-        reward = 20;
-
-    }else if(
-        winner.rarity ===
-        "Peu Commune"
-    ){
-
-        reward = 10;
-    }
-
-    coins += reward;
-    updateCoins();
 
     const userId =
     localStorage.getItem("userId");
@@ -429,7 +421,6 @@ function toggleMusic(){
     }else{
 
         music.pause();
-
     }
 }
 
