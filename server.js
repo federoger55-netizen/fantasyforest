@@ -2,16 +2,11 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
-const Stripe = require("stripe");
 
 const app = express();
 
 app.use(express.json());
 app.use(express.static(__dirname));
-
-const stripe = Stripe(
-    process.env.STRIPE_SECRET_KEY
-);
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -189,103 +184,6 @@ app.post("/spend-coins", async (req,res) => {
         res.json({
             success:false
         });
-    }
-});
-
-// ====================
-// BOUTIQUE STRIPE
-// ====================
-app.post("/create-checkout-session", async (req,res) => {
-
-    try {
-
-        const { userId, pack } = req.body;
-
-        let coins = 100;
-        let price = 100;
-
-        if(pack === "medium"){
-
-            coins = 500;
-            price = 400;
-        }
-
-        if(pack === "big"){
-
-            coins = 1000;
-            price = 700;
-        }
-
-        const session =
-        await stripe.checkout.sessions.create({
-
-            payment_method_types:[
-                "card"
-            ],
-
-            mode:"payment",
-
-            line_items:[{
-                price_data:{
-                    currency:"eur",
-                    product_data:{
-                        name:
-                        `${coins} Coins Fantasy Forest`
-                    },
-                    unit_amount:price
-                },
-                quantity:1
-            }],
-
-            success_url:
-            `https://fantasyforest-production.up.railway.app/success?userId=${userId}&coins=${coins}`,
-
-            cancel_url:
-            `https://fantasyforest-production.up.railway.app`
-        });
-
-        res.json({
-            success:true,
-            url:session.url
-        });
-
-    } catch(err){
-
-        console.error(err);
-
-        res.json({
-            success:false
-        });
-    }
-});
-
-// ====================
-// SUCCÈS PAIEMENT
-// ====================
-app.get("/success", async (req,res) => {
-
-    try {
-
-        const userId =
-        req.query.userId;
-
-        const coins =
-        parseInt(req.query.coins);
-
-        await pool.query(
-            'UPDATE "user" SET coins = coins + $1 WHERE id = $2',
-            [coins, userId]
-        );
-
-        res.redirect("/");
-
-    } catch(err){
-
-        console.error(err);
-
-        res.send(
-            "Erreur paiement"
-        );
     }
 });
 
