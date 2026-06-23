@@ -11,12 +11,51 @@
 
 <body>
 
-    <div class="logo-container">
-        <img src="fantasy-forest.png"
-             alt="Fantasy Forest"
-             class="logo-title">
+    <!-- COFFRE DE PIÈCES -->
+    <div class="top-bar">
+        <div class="coin-chest">
+            🪙 <span id="coins">100</span>
+        </div>
     </div>
 
+    <!-- LOGO -->
+    <div class="logo-container">
+        <img
+            src="fantasy-forest.png"
+            alt="Fantasy Forest"
+            class="logo-title">
+    </div>
+
+    <!-- CONNEXION -->
+    <div class="auth-box">
+
+        <h2>🌲 Compte Joueur</h2>
+
+        <input
+            id="username"
+            type="text"
+            placeholder="Pseudo">
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Mot de passe">
+
+        <br><br>
+
+        <button onclick="register()">
+            Inscription
+        </button>
+
+        <button onclick="login()">
+            Connexion
+        </button>
+
+        <p id="loginStatus"></p>
+
+    </div>
+
+    <!-- ROULETTE -->
     <div class="roulette">
 
         <div class="cursor"></div>
@@ -25,28 +64,47 @@
 
     </div>
 
+    <!-- BOUTONS -->
     <div>
 
-        <button class="launch-btn" onclick="startRoll()">
-            LANCER
+        <button
+            class="launch-btn"
+            onclick="startRoll()">
+            🎲 LANCER
         </button>
 
-        <button class="music-btn" onclick="toggleMusic()">
+        <button
+            class="music-btn"
+            onclick="toggleMusic()">
             🔊 MUSIQUE
         </button>
 
     </div>
 
+    <!-- RESULTAT -->
     <h2 id="result"></h2>
 
+    <!-- CARTE GAGNÉE -->
     <div id="winnerContainer">
-        <img id="winnerCard" src="" alt="Carte gagnée">
+
+        <img
+            id="winnerCard"
+            src=""
+            alt="Carte gagnée">
+
     </div>
 
+    <!-- INVENTAIRE -->
+    <h2>🎒 Inventaire</h2>
+
+    <div id="inventory"></div>
+
+    <!-- LEADERBOARD -->
     <h2>🏆 Leaderboard des Drops</h2>
 
     <div id="leaderboard"></div>
 
+    <!-- MUSIQUE -->
     <audio id="music" loop>
         <source src="foret.mp3" type="audio/mpeg">
     </audio>
