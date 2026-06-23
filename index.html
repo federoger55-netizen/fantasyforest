@@ -17,6 +17,32 @@
              class="logo-title">
     </div>
 
+    <div class="auth-box">
+
+        <h2>🌲 Compte Joueur</h2>
+
+        <input
+            id="username"
+            type="text"
+            placeholder="Pseudo">
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Mot de passe">
+
+        <button onclick="register()">
+            Inscription
+        </button>
+
+        <button onclick="login()">
+            Connexion
+        </button>
+
+        <p id="loginStatus"></p>
+
+    </div>
+
     <div class="roulette">
 
         <div class="cursor"></div>
@@ -42,6 +68,10 @@
     <div id="winnerContainer">
         <img id="winnerCard" src="" alt="Carte gagnée">
     </div>
+
+    <h2>🎒 Inventaire</h2>
+
+    <div id="inventory"></div>
 
     <h2>🏆 Leaderboard des Drops</h2>
 
