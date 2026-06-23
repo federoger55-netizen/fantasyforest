@@ -1,39 +1,38 @@
 const cardsList = [
 {
     name: "Feuilynx",
-    image: "image/feuilynx.png",
+    image: "feuilynx.png",
     rarity: "Commune"
 },
 {
     name: "Aquashi",
-    image: "image/aquashi.png",
+    image: "aquashi.png",
     rarity: "Commune"
 },
 {
     name: "Pyrabit",
-    image: "image/pyrabit.png",
+    image: "pyrabit.png",
     rarity: "Commune"
 },
 {
     name: "Élektron",
-    image: "image/elektron.png",
+    image: "elektron.png",
     rarity: "Commune"
 },
 {
     name: "Rocargo",
-    image: "image/rocargo.png",
+    image: "rocargo.png",
     rarity: "Peu Commune"
 },
 {
     name: "Loupgivre",
-    image: "image/loupgivre.png",
+    image: "loupgivre.png",
     rarity: "Peu Commune"
 },
 {
     name: "draco cristal",
-    image: "image/draco cristal.png",
+    image: "draco cristal.png",
     rarity: "Commune"
-
 }
 ];
 
@@ -164,8 +163,6 @@ function updateLeaderboard(){
         "leaderboard"
     ).innerHTML = html;
 }
-
-/* MUSIQUE */
 
 const music =
 document.getElementById("music");
