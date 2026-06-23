@@ -1,393 +1,120 @@
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    text-align:center;
-    color:white;
-
-    background-image:url("BANNIERE FORET.png");
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-
-    min-height:100vh;
-}
-
-/* LOGO */
-
-.logo-container{
-    text-align:center;
-    margin-top:20px;
-    margin-bottom:10px;
-}
-
-.logo-title{
-    width:750px;
-    max-width:95%;
-    height:auto;
-
-    filter:
-    drop-shadow(0 0 15px rgba(0,255,120,.5))
-    drop-shadow(0 0 30px rgba(255,215,0,.4));
-}
-
-/* CONNEXION */
+/* NOUVELLE CONNEXION */
 
 .auth-box{
-
-    width:500px;
+    width:650px;
     max-width:90%;
 
-    margin:20px auto;
+    margin:20px auto 40px auto;
 
-    padding:20px;
+    padding:30px;
 
-    border-radius:20px;
+    border-radius:25px;
 
-    background:rgba(0,0,0,0.35);
+    background:rgba(0,0,0,0.45);
 
-    backdrop-filter:blur(6px);
+    backdrop-filter:blur(12px);
+
+    border:2px solid rgba(0,255,120,0.3);
 
     box-shadow:
-    0 0 20px rgba(0,255,120,.4);
+    0 0 25px rgba(0,255,120,.3),
+    0 0 50px rgba(0,255,120,.15);
+}
+
+.auth-box h2{
+    margin-top:0;
+    margin-bottom:25px;
+
+    font-size:38px;
+
+    color:white;
+
+    text-shadow:
+    0 0 15px rgba(0,255,120,.8);
+}
+
+.auth-row{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
 .auth-box input{
 
-    width:180px;
-    height:35px;
-
-    margin:5px;
+    width:230px;
+    height:50px;
 
     border:none;
-    border-radius:8px;
+    outline:none;
 
-    padding-left:10px;
-}
+    border-radius:12px;
 
-.auth-box button{
+    padding-left:15px;
 
-    height:38px;
+    font-size:17px;
 
-    border:none;
-    border-radius:8px;
-
-    cursor:pointer;
-
-    font-weight:bold;
-}
-
-/* ROULETTE */
-
-.roulette{
-
-    width:950px;
-    height:280px;
-
-    margin:30px auto;
-
-    overflow:hidden;
-    position:relative;
-
-    border-radius:20px;
-
-    background:rgba(0,0,0,.35);
-
-    backdrop-filter:blur(4px);
-
-    box-shadow:
-    0 0 20px rgba(0,255,120,.4);
-}
-
-.cards{
-
-    display:flex;
-
-    position:absolute;
-
-    left:0;
-    top:15px;
-}
-
-.card{
-
-    width:180px;
-    height:250px;
-
-    margin-right:15px;
-
-    flex-shrink:0;
-
-    overflow:hidden;
-
-    border-radius:15px;
-}
-
-.card img{
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-}
-
-.cursor{
-
-    position:absolute;
-
-    left:50%;
-    top:0;
-
-    width:4px;
-    height:100%;
-
-    transform:translateX(-50%);
-
-    background:white;
-
-    box-shadow:
-    0 0 10px white,
-    0 0 25px white,
-    0 0 40px white;
-
-    z-index:10;
-}
-
-/* BOUTONS */
-
-.launch-btn{
-
-    width:220px;
-    height:65px;
-
-    border:none;
-    border-radius:15px;
-
-    background:#19c94f;
-
-    color:white;
-
-    font-size:28px;
-    font-weight:bold;
-
-    cursor:pointer;
-
-    box-shadow:
-    0 0 20px #19c94f;
-
-    transition:.25s;
-}
-
-.launch-btn:hover{
-
-    transform:scale(1.05);
-}
-
-.music-btn{
-
-    width:180px;
-    height:65px;
-
-    margin-left:10px;
-
-    border:none;
-    border-radius:15px;
-
-    background:#3b82f6;
-
-    color:white;
-
-    font-size:22px;
-    font-weight:bold;
-
-    cursor:pointer;
-
-    box-shadow:
-    0 0 20px #3b82f6;
-
-    transition:.25s;
-}
-
-.music-btn:hover{
-
-    transform:scale(1.05);
-}
-
-/* RESULTAT */
-
-#result{
-
-    margin-top:20px;
-
-    font-size:30px;
-    font-weight:bold;
-
-    text-shadow:
-    0 0 10px black,
-    0 0 20px black;
-}
-
-/* CARTE GAGNÉE */
-
-#winnerContainer{
-
-    margin-top:15px;
-}
-
-#winnerCard{
-
-    width:260px;
-
-    display:none;
-
-    border-radius:15px;
-
-    box-shadow:
-    0 0 25px #00ff66,
-    0 0 50px #00ff66;
-}
-
-/* INVENTAIRE */
-
-#inventory{
-
-    width:90%;
-
-    margin:30px auto;
-}
-
-.inventory-grid{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-    gap:20px;
-}
-
-.inventory-card{
-
-    width:220px;
-
-    padding:15px;
-
-    border-radius:20px;
-
-    background:rgba(0,0,0,.45);
-
-    backdrop-filter:blur(5px);
-
-    box-shadow:
-    0 0 15px rgba(0,255,120,.4);
+    background:rgba(255,255,255,0.9);
 
     transition:.3s;
 }
 
-.inventory-card:hover{
+.auth-box input:focus{
 
-    transform:translateY(-8px) scale(1.05);
-
-    box-shadow:
-    0 0 25px rgba(0,255,120,.8);
-}
-
-.inventory-image{
-
-    width:100%;
-
-    border-radius:15px;
-}
-
-.inventory-card h3{
-
-    margin-top:12px;
-    margin-bottom:5px;
-
-    color:white;
-}
-
-.inventory-card p{
-
-    color:gold;
-
-    font-weight:bold;
-
-    margin:5px 0;
-}
-
-.inventory-qty{
-
-    margin-top:10px;
-
-    background:#19c94f;
-
-    color:white;
-
-    border-radius:10px;
-
-    padding:8px;
-
-    font-weight:bold;
-}
-
-/* LEADERBOARD */
-
-#leaderboard{
-
-    width:500px;
-    max-width:90%;
-
-    margin:20px auto;
-
-    padding:20px;
-
-    border-radius:20px;
-
-    background:rgba(0,0,0,.45);
-
-    backdrop-filter:blur(5px);
+    transform:scale(1.03);
 
     box-shadow:
-    0 0 20px rgba(255,215,0,.35);
+    0 0 15px rgba(0,255,120,.8);
 }
 
-#leaderboard p{
+.auth-btn{
 
-    font-size:22px;
+    height:50px;
 
-    margin:10px 0;
+    padding:0 20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
 }
 
-/* TITRES */
+.register-btn{
 
-h2{
+    background:#22c55e;
+    color:white;
 
-    text-shadow:
-    0 0 10px black,
-    0 0 20px black;
+    box-shadow:
+    0 0 15px #22c55e;
 }
 
-/* MOBILE */
+.login-btn{
 
-@media(max-width:1000px){
+    background:#3b82f6;
+    color:white;
 
-    .roulette{
+    box-shadow:
+    0 0 15px #3b82f6;
+}
 
-        width:95%;
-    }
+.auth-btn:hover{
 
-    .launch-btn,
-    .music-btn{
+    transform:translateY(-3px) scale(1.05);
+}
 
-        width:90%;
+#loginStatus{
 
-        margin:10px 0;
-    }
+    margin-top:15px;
 
-    .inventory-card{
+    font-size:18px;
+    font-weight:bold;
 
-        width:180px;
-    }
+    color:#7CFF9E;
 }
