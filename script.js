@@ -38,11 +38,90 @@ const cardsList = [
 
 let position = 0;
 let speed = 0;
-
 let generatedCards = [];
 
 let drops =
 JSON.parse(localStorage.getItem("drops")) || {};
+
+async function register(){
+
+    const username =
+    document.getElementById("username").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const response =
+    await fetch("/register",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            username,
+            password
+        })
+    });
+
+    const data =
+    await response.json();
+
+    if(data.success){
+
+        alert("Compte créé !");
+
+    }else{
+
+        alert("Erreur inscription");
+
+    }
+}
+
+async function login(){
+
+    const username =
+    document.getElementById("username").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const response =
+    await fetch("/login",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            username,
+            password
+        })
+    });
+
+    const data =
+    await response.json();
+
+    if(data.success){
+
+        localStorage.setItem(
+            "userId",
+            data.userId
+        );
+
+        document.getElementById(
+            "loginStatus"
+        ).innerText =
+        "✅ Connecté : " + username;
+
+        loadInventory();
+
+    }else{
+
+        alert(
+            "Identifiants incorrects"
+        );
+
+    }
+}
 
 function createCards(){
 
@@ -53,12 +132,15 @@ function createCards(){
 
     generatedCards = [];
 
-    for(let i = 0; i < 50; i++){
+    for(let i=0;i<50;i++){
 
         const card =
-        cardsList[Math.floor(
-            Math.random() * cardsList.length
-        )];
+        cardsList[
+            Math.floor(
+                Math.random() *
+                cardsList.length
+            )
+        ];
 
         generatedCards.push(card);
 
@@ -80,12 +162,17 @@ function startRoll(){
     const cards =
     document.getElementById("cards");
 
-    document.getElementById("result").innerText = "";
+    document.getElementById(
+        "result"
+    ).innerText = "";
 
-    document.getElementById("winnerCard").style.display =
+    document.getElementById(
+        "winnerCard"
+    ).style.display =
     "none";
 
-    const roll = setInterval(() => {
+    const roll =
+    setInterval(() => {
 
         position += speed;
 
@@ -109,12 +196,14 @@ function showWinner(){
     const cardWidth = 195;
 
     const centerLine =
-    document.querySelector(".roulette").offsetWidth / 2;
+    document.querySelector(
+        ".roulette"
+    ).offsetWidth / 2;
 
     const winnerIndex =
     Math.floor(
-        (position + centerLine) /
-        cardWidth
+        (position + centerLine)
+        / cardWidth
     );
 
     const winner =
@@ -122,19 +211,24 @@ function showWinner(){
 
     if(!winner) return;
 
-    document.getElementById("result").innerText =
+    document.getElementById(
+        "result"
+    ).innerText =
     "🎉 Tu as gagné " +
     winner.name +
     " • " +
     winner.rarity;
 
     const card =
-    document.getElementById("winnerCard");
+    document.getElementById(
+        "winnerCard"
+    );
 
     card.src = winner.image;
     card.style.display = "block";
 
     if(!drops[winner.name]){
+
         drops[winner.name] = 0;
     }
 
@@ -150,60 +244,24 @@ function showWinner(){
 
     if(userId){
 
-        fetch("/add-card", {
-            method: "POST",
-            headers: {
+        fetch("/add-card",{
+            method:"POST",
+            headers:{
                 "Content-Type":
                 "application/json"
             },
-            body: JSON.stringify({
-                userId: userId,
-                card: winner.name
+            body:JSON.stringify({
+                userId,
+                card:winner.name
             })
         })
-        .then(res => res.json())
-        .then(data => {
-
-            console.log(
-                "Carte sauvegardée :",
-                data
-            );
-
-        })
-        .catch(err => {
-
-            console.error(
-                "Erreur sauvegarde carte :",
-                err
-            );
-
+        .then(() => {
+            loadInventory();
         });
-
-    } else {
-
-        console.log(
-            "Aucun utilisateur connecté"
-        );
 
     }
 
     updateLeaderboard();
-}
-
-function updateLeaderboard(){
-
-    let html = "";
-
-    for(const card in drops){
-
-        html += `
-        <p>${card} : ${drops[card]}</p>
-        `;
-    }
-
-    document.getElementById(
-        "leaderboard"
-    ).innerHTML = html;
 }
 
 async function loadInventory(){
@@ -213,41 +271,70 @@ async function loadInventory(){
 
     if(!userId) return;
 
-    try{
+    const response =
+    await fetch(
+        `/inventory/${userId}`
+    );
 
-        const response =
-        await fetch(
-            `/inventory/${userId}`
-        );
+    const inventory =
+    await response.json();
 
-        const inventory =
-        await response.json();
+    let html = "";
 
-        console.log(
-            "Inventaire :",
-            inventory
-        );
+    inventory.forEach(card => {
 
-    }catch(err){
+        html += `
+        <p>
+        ${card.card_name}
+        x${card.quantity}
+        </p>
+        `;
+    });
 
-        console.error(err);
+    document.getElementById(
+        "inventory"
+    ).innerHTML = html;
+}
 
+function updateLeaderboard(){
+
+    let html = "";
+
+    for(const card in drops){
+
+        html += `
+        <p>
+        ${card} :
+        ${drops[card]}
+        </p>
+        `;
     }
+
+    document.getElementById(
+        "leaderboard"
+    ).innerHTML = html;
 }
 
 const music =
 document.getElementById("music");
 
-document.addEventListener("click", () => {
+document.addEventListener(
+    "click",
+    () => {
 
-    if(music && music.paused){
+        if(
+            music &&
+            music.paused
+        ){
 
-        music.volume = 0.3;
-        music.play();
+            music.volume = 0.3;
+            music.play();
 
-    }
+        }
 
-},{ once:true });
+    },
+    { once:true }
+);
 
 function toggleMusic(){
 
