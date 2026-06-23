@@ -17,7 +17,9 @@ const pool = new Pool({
 
 const SECRET = "fantasyforestsecret";
 
+// ====================
 // INSCRIPTION
+// ====================
 app.post("/register", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -25,8 +27,8 @@ app.post("/register", async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
 
         await pool.query(
-            'INSERT INTO "user"(username,password,cards) VALUES($1,$2,$3)',
-            [username, hash, "[]"]
+            'INSERT INTO "user"(username,password) VALUES($1,$2)',
+            [username, hash]
         );
 
         res.json({ success: true });
@@ -37,7 +39,9 @@ app.post("/register", async (req, res) => {
     }
 });
 
+// ====================
 // CONNEXION
+// ====================
 app.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -47,8 +51,9 @@ app.post("/login", async (req, res) => {
             [username]
         );
 
-        if (result.rows.length === 0)
+        if (result.rows.length === 0) {
             return res.json({ success: false });
+        }
 
         const user = result.rows[0];
 
@@ -57,8 +62,9 @@ app.post("/login", async (req, res) => {
             user.password
         );
 
-        if (!valid)
+        if (!valid) {
             return res.json({ success: false });
+        }
 
         const token = jwt.sign(
             { id: user.id },
@@ -68,7 +74,8 @@ app.post("/login", async (req, res) => {
         res.json({
             success: true,
             token,
-            userId: user.id
+            userId: user.id,
+            username: user.username
         });
 
     } catch (err) {
@@ -77,39 +84,69 @@ app.post("/login", async (req, res) => {
     }
 });
 
-// INVENTAIRE
-app.get("/inventory/:id", async (req, res) => {
-
-    const result = await pool.query(
-        'SELECT cards FROM "user" WHERE id=$1',
-        [req.params.id]
-    );
-
-    res.json(result.rows[0]);
-});
-
+// ====================
 // AJOUTER UNE CARTE
+// ====================
 app.post("/add-card", async (req, res) => {
+    try {
+        const { userId, card } = req.body;
 
-    const { userId, card } = req.body;
+        const existing = await pool.query(
+            "SELECT * FROM inventory WHERE user_id=$1 AND card_name=$2",
+            [userId, card]
+        );
 
-    const result = await pool.query(
-        'SELECT cards FROM "user" WHERE id=$1',
-        [userId]
-    );
+        if (existing.rows.length > 0) {
+            await pool.query(
+                "UPDATE inventory SET quantity = quantity + 1 WHERE user_id=$1 AND card_name=$2",
+                [userId, card]
+            );
+        } else {
+            await pool.query(
+                "INSERT INTO inventory(user_id, card_name, quantity) VALUES($1,$2,$3)",
+                [userId, card, 1]
+            );
+        }
 
-    let cards = result.rows[0].cards || [];
+        res.json({ success: true });
 
-    cards.push(card);
-
-    await pool.query(
-        'UPDATE "user" SET cards=$1 WHERE id=$2',
-        [JSON.stringify(cards), userId]
-    );
-
-    res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.json({ success: false });
+    }
 });
 
+// ====================
+// INVENTAIRE
+// ====================
+app.get("/inventory/:id", async (req, res) => {
+    try {
+        const result = await pool.query(
+            "SELECT card_name, quantity FROM inventory WHERE user_id=$1",
+            [req.params.id]
+        );
+
+        res.json(result.rows);
+
+    } catch (err) {
+        console.error(err);
+        res.json([]);
+    }
+});
+
+// ====================
+// TEST SERVEUR
+// ====================
+app.get("/ping", (req, res) => {
+    res.json({
+        success: true,
+        message: "Fantasy Forest Online"
+    });
+});
+
+// ====================
+// LANCEMENT
+// ====================
 app.listen(process.env.PORT || 3000, () => {
     console.log("Fantasy Forest lancé !");
 });
