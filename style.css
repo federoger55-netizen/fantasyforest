@@ -4,7 +4,7 @@ body{
     text-align:center;
     color:white;
 
-    background-image:url("image/BANNIERE FORET.png");
+    background-image:url("BANNIERE FORET.png");
     background-size:cover;
     background-position:center center;
     background-repeat:no-repeat;
@@ -13,7 +13,7 @@ body{
     min-height:100vh;
 }
 
-/* LOGO FANTASY FOREST */
+/* LOGO */
 .logo-container{
     text-align:center;
     margin-top:20px;
@@ -94,7 +94,7 @@ body{
     z-index:10;
 }
 
-/* BOUTON LANCER */
+/* BOUTONS */
 .launch-btn{
     width:220px;
     height:60px;
@@ -123,7 +123,6 @@ body{
     transform:scale(1.05);
 }
 
-/* BOUTON MUSIQUE */
 .music-btn{
     width:180px;
     height:60px;
@@ -163,7 +162,7 @@ body{
     0 0 20px black;
 }
 
-/* IMAGE GAGNÉE */
+/* CARTE GAGNÉE */
 #winnerContainer{
     margin-top:15px;
 }
